@@ -1,0 +1,56 @@
+name: Module CI & Publish
+
+on:
+  push:
+    branches:
+      - 'module/**'
+  pull_request:
+    branches:
+      - main
+      - 'module/**'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-publish:
+    name: Build & Publish (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.14.1'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@ludiars'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Check if package version changed
+        id: version-check
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/module/')
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          PUBLISHED_VERSION=$(npm view "$PACKAGE_NAME" version --registry=https://npm.pkg.github.com 2>/dev/null || echo "0.0.0")
+
+          if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Version $LOCAL_VERSION already published, skipping"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            echo "Publishing $PACKAGE_NAME@$LOCAL_VERSION (current: $PUBLISHED_VERSION)"
+          fi
+
+      - name: Publish to npm.pkg.github.com
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/module/') && steps.version-check.outputs.skip != 'true'
+        run: npm publish
