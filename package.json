@@ -1,7 +1,7 @@
 {
   "name": "@ludiars/schedula-module-integrations",
   "version": "0.1.0",
-  "description": "External integrations (Google Calendar / Notion) for Schedula",
+  "description": "External integrations (Google Calendar / Notion) for Schedula — Cernere OAuth token storage",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,14 +11,17 @@
   "peerDependencies": {
     "@ludiars/schedula-sdk": "^0.1.0",
     "drizzle-orm": "^0.45.0",
-    "hono": "^4.0.0"
+    "hono": "^4.0.0",
+    "uuid": "^11.0.0 || ^12.0.0 || ^13.0.0"
   },
   "devDependencies": {
     "@ludiars/schedula-sdk": "file:../Schedula/packages/sdk",
     "@types/node": "^22.0.0",
+    "@types/uuid": "^10.0.0",
     "drizzle-orm": "^0.45.1",
     "hono": "^4.12.8",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "uuid": "^13.0.0"
   },
   "license": "MIT",
   "publishConfig": { "registry": "https://npm.pkg.github.com" },

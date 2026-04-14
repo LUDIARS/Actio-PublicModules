@@ -1,26 +1,24 @@
 /**
- * @ludiars/schedula-module-integrations (skeleton)
+ * @ludiars/schedula-module-integrations
  *
- * Google Calendar / Notion 連携モジュール — Phase 2 では skeleton のみ。
- * legacy users.google_* / integrationSettingRepo / syncLogRepo 依存のため
- * Cernere 移行と合わせて段階的に本実装する。
+ * Google Calendar + Notion 連携モジュール。
+ * OAuth トークンは Cernere (ctx.oauth) に保管 — 個人データ保管禁止ルール準拠。
  */
 
 import { defineModule } from "@ludiars/schedula-sdk";
+import { registerRoutes } from "./routes.js";
 
 export default defineModule({
   id: "integrations",
-  name: "外部サービス連携 (skeleton)",
-  description: "Phase 2 skeleton — 実装は Schedula 本体側。Cernere 移行と連動して移設予定。",
+  name: "外部サービス連携",
+  description: "Google Calendar / Notion 同期 — OAuth token は Cernere に委任",
   version: "0.1.0",
   schedulaApiVersion: "^1.0.0",
   scope: "per-user",
-  basePath: "/api/integrations-ext",
-  routes: (app) => {
-    app.get("/info", (c) => c.json({
-      module: "integrations",
-      status: "skeleton",
-      message: "Integrations module is awaiting Cernere OAuth/data-sharing migration.",
-    }));
-  },
+  basePath: "/api/integrations",
+  routes: registerRoutes,
 });
+
+export { registerRoutes } from "./routes.js";
+export { makeRepo } from "./repo.js";
+export * from "./tables.js";
