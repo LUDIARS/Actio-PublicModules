@@ -7,7 +7,11 @@
  * Phase 3 で Schedula からこれらのテーブル定義を本モジュール配下に移管予定。
  */
 
-import { pgTable, text, timestamp, integer, unique, index, boolean } from "drizzle-orm/pg-core";
+// 注: Schedula は SQLite (dev/test) / PostgreSQL (prod) をサポート。
+// pg-core のテーブル定義は Drizzle の汎用的なテーブル宣言として機能するため
+// SQLite でも動作する (データ型は consumer 側のスキーマで決定される)。
+// boolean カラムは integer (0/1) で扱う (両方言で互換性確保)。
+import { pgTable, text, timestamp, integer, unique, index } from "drizzle-orm/pg-core";
 
 export const votingEvents = pgTable("voting_events", {
   id: text("id").primaryKey(),
@@ -41,7 +45,8 @@ export const votes = pgTable(
     candidateId: text("candidate_id").notNull(),
     userId: text("user_id").notNull(),
     answer: text("answer").notNull(),
-    isAutoReply: boolean("is_auto_reply").notNull().default(false),
+    // boolean フィールドは integer (0/1) で宣言 — SQLite/PostgreSQL 双方互換
+    isAutoReply: integer("is_auto_reply").notNull().default(0),
     comment: text("comment").notNull().default(""),
     createdAt: timestamp("created_at").$defaultFn(() => new Date()).notNull(),
     updatedAt: timestamp("updated_at").$defaultFn(() => new Date()).notNull(),

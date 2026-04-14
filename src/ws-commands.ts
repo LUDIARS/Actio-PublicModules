@@ -77,7 +77,7 @@ const submitVotes: WsCommandHandler<SubmitVotesPayload> = async (userId, payload
       await repo.votes.update(existing.id, {
         answer: v.answer,
         comment: v.comment || "",
-        isAutoReply: false,
+        isAutoReply: 0,
         updatedAt: new Date(),
       });
       saved.push({ ...existing, answer: v.answer, comment: v.comment || "" });
@@ -89,7 +89,7 @@ const submitVotes: WsCommandHandler<SubmitVotesPayload> = async (userId, payload
         candidateId: v.candidateId,
         userId,
         answer: v.answer,
-        isAutoReply: false,
+        isAutoReply: 0,
         comment: v.comment || "",
       });
       saved.push({ id: voteId, ...v, userId });
@@ -140,7 +140,7 @@ const autoReply: WsCommandHandler<AutoReplyPayload> = async (userId, payload, ct
     if (existing) {
       await repo.votes.update(existing.id, {
         answer,
-        isAutoReply: true,
+        isAutoReply: 1,
         comment: "自動回答",
         updatedAt: new Date(),
       });
@@ -152,7 +152,7 @@ const autoReply: WsCommandHandler<AutoReplyPayload> = async (userId, payload, ct
         candidateId: cand.id,
         userId,
         answer,
-        isAutoReply: true,
+        isAutoReply: 1,
         comment: "自動回答",
       });
     }

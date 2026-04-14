@@ -140,7 +140,7 @@ export function registerRoutes(app: Hono, ctx: ModuleContext): void {
         await repo.votes.update(existing.id, {
           answer: v.answer,
           comment: v.comment || "",
-          isAutoReply: false,
+          isAutoReply: 0,
           updatedAt: new Date(),
         });
         saved.push({ ...existing, answer: v.answer, comment: v.comment || "" });
@@ -152,7 +152,7 @@ export function registerRoutes(app: Hono, ctx: ModuleContext): void {
           candidateId: v.candidateId,
           userId,
           answer: v.answer,
-          isAutoReply: false,
+          isAutoReply: 0,
           comment: v.comment || "",
         });
         saved.push({ id: voteId, ...v, userId });
@@ -189,7 +189,7 @@ export function registerRoutes(app: Hono, ctx: ModuleContext): void {
       if (existing) {
         await repo.votes.update(existing.id, {
           answer,
-          isAutoReply: true,
+          isAutoReply: 1,
           comment: "自動回答",
           updatedAt: new Date(),
         });
@@ -201,7 +201,7 @@ export function registerRoutes(app: Hono, ctx: ModuleContext): void {
           candidateId: cand.id,
           userId,
           answer,
-          isAutoReply: true,
+          isAutoReply: 1,
           comment: "自動回答",
         });
       }
