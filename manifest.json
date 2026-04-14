@@ -1,10 +1,10 @@
 {
   "id": "smart-scheduler",
-  "name": "スマートスケジューラ (skeleton)",
-  "description": "DP ベースの自動配置スケジューラ (Phase 2 skeleton — 大規模ロジックのため段階移行)",
+  "name": "スマートスケジューラ",
+  "description": "DP ベースの自動配置スケジューラ (グループメンバーの空き状況 + 講師スロット制約)",
   "version": "0.1.0",
   "schedulaApiVersion": "^1.0.0",
   "scope": "per-group",
   "depends": ["holiday"],
-  "basePath": "/api/smart-scheduler-ext"
+  "basePath": "/api/smart-scheduler"
 }
