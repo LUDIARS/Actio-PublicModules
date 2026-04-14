@@ -1,0 +1,10 @@
+{
+  "id": "myplan",
+  "name": "MyPlan",
+  "description": "週間ルーティーン (繰り返し予定) と PersonalEvent への展開",
+  "version": "0.1.0",
+  "schedulaApiVersion": "^1.0.0",
+  "scope": "per-user",
+  "basePath": "/api/myplans",
+  "wsCommands": ["create", "update", "delete", "generate"]
+}
