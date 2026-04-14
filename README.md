@@ -1,37 +1,23 @@
-# Actio-PublicModules
+# @ludiars/schedula-module-integrations (skeleton)
 
-**Schedula (Actio) 用のパブリックモジュール集合**。Ergo スタイルのブランチ
-ベース monorepo で、各モジュールを独立したブランチ (`module/<name>`) に
-配置する。
+外部サービス (Google Calendar / Notion) との連携モジュール。
 
-## 設計原則 (Ergo に準拠)
+## 現状: Phase 2 skeleton
 
-- **`main`** — ドキュメント・モジュール一覧・ルールのみ。ソースコードなし
-- **`module/<name>`** — 各モジュールの完全な実装 (npm パッケージルート)
-- **`release`** — 全モジュールメタデータの自動集約 (予定)
+Google Calendar 連携は Schedula 本体の **legacy users.google_*** カラムへの
+依存があり、Cernere 移管前提のため Phase 3 以降で本格移行。
+Notion 連携は OAuth 不要だが integration_settings / sync_logs テーブルを
+扱うため、別途リポジトリ移行が必要。
 
-各 `module/*` ブランチは独立した npm パッケージで、
-`@ludiars/schedula-module-<name>` として GitHub Packages に publish される。
-Schedula 本体 (`LUDIARS/Schedula`) は `@ludiars/schedula-sdk` 経由でこれらを
-統合する。
+スケルトン段階では `/api/integrations-ext/info` のみ提供。
+実エンドポイント (`/api/integrations/{google-calendar,notion}/*`) は
+Schedula 本体側で提供される。
 
-## モジュール作成ガイド
+## ロードマップ
 
-1. `git checkout -b module/<name> main` で新ブランチを作成
-2. ルートに `@ludiars/schedula-module-<name>` として動作する npm パッケージを配置
-3. `@ludiars/schedula-sdk` の `defineModule()` でマニフェスト + 実装を宣言
-4. `push` すると CI が build + publish を実行 (`.github/workflows/module-ci.yml`)
+- [x] Phase 1: skeleton + manifest
+- [ ] Phase 2.x: Notion 連携の本実装 (Cernere user_data 経由)
+- [ ] Phase 3: Google Calendar 連携 (Cernere OAuth トークン委譲後)
 
-詳細は [spec/MODULE_DESIGN.md](./spec/MODULE_DESIGN.md) を参照。
-
-## モジュール一覧
-
-- [module_list.md](./module_list.md) — 人間用
-- [module_list.yaml](./module_list.yaml) — 機械処理用
-
-## 関連
-
-- [LUDIARS/Schedula](https://github.com/LUDIARS/Schedula) — 本体
-- [LUDIARS/Cernere](https://github.com/LUDIARS/Cernere) — 認証基盤
-- [LUDIARS/ergo](https://github.com/LUDIARS/ergo) — 本設計の祖形 (C++ 音響エンジン)
-- [AIFormat RULE.md](https://github.com/LUDIARS/AIFormat/blob/main/RULE.md) — 共通ルール
+## ライセンス
+MIT

@@ -1,0 +1,10 @@
+{
+  "id": "integrations",
+  "name": "外部サービス連携 (skeleton)",
+  "description": "Google Calendar / Notion 連携 (Phase 2 skeleton — Cernere 移行待ち)",
+  "version": "0.1.0",
+  "schedulaApiVersion": "^1.0.0",
+  "scope": "per-user",
+  "basePath": "/api/integrations-ext",
+  "wsCommands": []
+}
