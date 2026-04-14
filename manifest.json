@@ -1,0 +1,17 @@
+{
+  "id": "voting",
+  "name": "投票・日程調整",
+  "description": "候補日時を投票で決定する。自動回答 (空き時間を検出) もサポート",
+  "version": "0.1.0",
+  "schedulaApiVersion": "^1.0.0",
+  "scope": "per-group",
+  "basePath": "/api/voting",
+  "userData": {},
+  "wsCommands": [
+    "create_event",
+    "submit_votes",
+    "auto_reply",
+    "update_event",
+    "delete_event"
+  ]
+}
